@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevManual.init — O Hub Definitivo do Desenvolvedor Iniciante</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- PyScript para executar Python diretamente no navegador no Playground -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i data-lucide="terminal-square"></i>
+                <span>DevManual<span class="highlight">.init</span></span>
+            </a>
+            
+            <div class="search-bar">
+                <i data-lucide="search"></i>
+                <input type="text" id="global-search" placeholder="Buscar linguagem, termo ou conceito...">
+            </div>
+
+            <nav class="nav-links">
+                <a href="#quiz"><i data-lucide="help-circle"></i> Quiz Perfil</a>
+                <a href="#languages"><i data-lucide="layers"></i> Linguagens</a>
+                <a href="#playground"><i data-lucide="play"></i> Playground</a>
+                <a href="#git"><i data-lucide="git-branch"></i> Git & Projetos</a>
+                <a href="#roadmap"><i data-lucide="calendar"></i> 90 Dias</a>
+                <a href="#glossary"><i data-lucide="book-open"></i> Dicionário</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge"><i data-lucide="sparkles"></i> Plano Prático de Carreira de T.I.</span>
+            <h1>Construa sua carreira em <span class="gradient-text">Desenvolvimento de Software</span></h1>
+            <p>O guia interativo com mapa de estudo, playground de código, testes de perfil e projetos reais do zero à primeira vaga.</p>
+            
+            <div class="hero-actions">
+                <a href="#quiz" class="btn-hero btn-hero-primary"><i data-lucide="compass"></i> Descobrir Minha Área</a>
+                <a href="#playground" class="btn-hero btn-hero-secondary"><i data-lucide="code"></i> Testar Código Agora</a>
+            </div>
+
+            <div class="progress-card">
+                <div class="progress-info">
+                    <span><i data-lucide="award"></i> Seu Progresso de Aprendizado:</span>
+                    <strong id="progress-percentage">0%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="global-progress"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+
+        <!-- Seção: Quiz do Perfil de Carreira -->
+        <section id="quiz" class="section">
+            <div class="section-header">
+                <h2><i data-lucide="compass"></i> Teste de Perfil: Qual área combina com você?</h2>
+                <p>Responda 3 perguntas simples e receba a recomendação da sua área e linguagem ideal.</p>
+            </div>
+
+            <div class="quiz-card card">
+                <div id="quiz-step-1" class="quiz-step active">
+                    <h3>1. O que você mais gosta de fazer ao usar o computador/celular?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-opt" onclick="nextQuiz(1, 'front')">🎨 Reparar no visual, animações e telas dos sites</button>
+                        <button class="quiz-opt" onclick="nextQuiz(1, 'back')">⚙️ Entender como as coisas funcionam por trás e resolver quebra-cabeças</button>
+                        <button class="quiz-opt" onclick="nextQuiz(1, 'data')">📊 Analisar gráficos, estatísticas, padrões e previsões</button>
+                        <button class="quiz-opt" onclick="nextQuiz(1, 'mobile')">📱 Usar aplicativos práticos no celular no dia a dia</button>
+                    </div>
+                </div>
+
+                <div id="quiz-step-2" class="quiz-step">
+                    <h3>2. Como você prefere ver o resultado do seu trabalho?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-opt" onclick="nextQuiz(2, 'front')">👁️ Imediatamente na tela de forma visual e colorida</button>
+                        <button class="quiz-opt" onclick="nextQuiz(2, 'back')">🛡️ Em dados processados com rapidez, segurança e lógica impecável</button>
+                        <button class="quiz-opt" onclick="nextQuiz(2, 'data')">📈 Em relatórios e modelos preditivos que respondem perguntas</button>
+                        <button class="quiz-opt" onclick="nextQuiz(2, 'mobile')">📲 Rodando diretamente na palma da mão</button>
+                    </div>
+                </div>
+
+                <div id="quiz-result" class="quiz-result hidden">
+                    <div class="result-badge"><i data-lucide="check-circle-2"></i> Resultado Calculado!</div>
+                    <h3 id="quiz-title">--</h3>
+                    <p id="quiz-desc">--</p>
+                    <div class="quiz-recommendation">
+                        <strong>Linguagem recomendada para começar:</strong>
+                        <span id="quiz-lang" class="highlight-box">--</span>
+                    </div>
+                    <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 1rem;"><i data-lucide="rotate-ccw"></i> Refazer Teste</button>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Seção: Catálogo e Organização das Linguagens -->
+        <section id="languages" class="section">
+            <div class="section-header">
+                <h2><i data-lucide="layers"></i> Catálogo de Linguagens</h2>
+                <p>Explore as principais linguagens do mercado com comparador e fichas detalhadas.</p>
+            </div>
+
+            <!-- Controles de Filtro e Comparador -->
+            <div class="filter-controls">
+                <div class="category-buttons" id="category-filters">
+                    <button class="filter-btn active" data-category="all">Todas</button>
+                    <button class="filter-btn" data-category="beginner">🚀 Recomendadas p/ Iniciantes</button>
+                    <button class="filter-btn" data-category="frontend">🌐 Frontend</button>
+                    <button class="filter-btn" data-category="backend">⚙️ Backend</button>
+                    <button class="filter-btn" data-category="mobile">📱 Mobile</button>
+                    <button class="filter-btn" data-category="data">📊 Dados & IA</button>
+                    <button class="filter-btn" data-category="systems">💻 Sistemas & Jogos</button>
+                </div>
+
+                <div class="comparator-bar" id="comparator-bar">
+                    <span><i data-lucide="scale"></i> Comparador de Linguagens (<span id="compare-count">0</span>/3)</span>
+                    <button id="open-comparator-btn" class="btn-primary" disabled>Comparar Selecionadas</button>
+                </div>
+            </div>
+
+            <!-- Grid de Cards de Linguagens -->
+            <div class="languages-grid" id="languages-grid">
+                <!-- Cards renderizados via JS -->
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Seção: Playground de Código Interativo -->
+        <section id="playground" class="section">
+            <div class="section-header">
+                <h2><i data-lucide="play-circle"></i> Playground de Código Vivo</h2>
+                <p>Escreva e execute seu primeiro código diretamente no navegador agora mesmo sem instalar nada!</p>
+            </div>
+
+            <div class="playground-card card">
+                <div class="playground-tabs">
+                    <button class="tab-btn active" onclick="switchTab('js')">JavaScript</button>
+                    <button class="tab-btn" onclick="switchTab('html')">HTML + CSS</button>
+                </div>
+
+                <div class="playground-editor-container">
+                    <div class="editor-pane">
+                        <label><i data-lucide="code-2"></i> Editor de Código</label>
+                        <textarea id="code-editor" spellcheck="false">// Digite seu código JavaScript aqui
+function calcularIMC(peso, altura) {
+    let imc = peso / (altura * altura);
+    return imc.toFixed(2);
+}
+
+console.log("Seu IMC estimado é: " + calcularIMC(75, 1.75));
+console.log("Olá! Você executou seu código no navegador.");</textarea>
+                        <button class="btn-primary btn-run" onclick="runCode()"><i data-lucide="play"></i> Executar Código</button>
+                    </div>
+
+                    <div class="output-pane">
+                        <label><i data-lucide="terminal"></i> Terminal / Saída de Resultado</label>
+                        <div id="code-output" class="console-box">Clique em "Executar Código" para ver a saída aqui...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Seção: Ferramentas Git e Checklist de Projetos -->
+        <section id="git" class="section">
+            <div class="section-header">
+                <h2><i data-lucide="git-commit"></i> Git Essencial & Projetos para Portfólio</h2>
+                <p>Domine o controle de versão e construa os projetos certos para chamar a atenção dos recrutadores.</p>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card">
+                    <h3><i data-lucide="terminal"></i> Principais Comandos Git</h3>
+                    <ul class="git-commands">
+                        <li><code>git init</code> <span>Inicializa o repositório na pasta atual</span></li>
+                        <li><code>git clone [url]</code> <span>Baixa um repositório remoto existente</span></li>
+                        <li><code>git status</code> <span>Exibe o estado das suas alterações</span></li>
+                        <li><code>git add .</code> <span>Adiciona arquivos para a fila de envio</span></li>
+                        <li><code>git commit -m "msg"</code> <span>Salva um histórico com mensagem explicativa</span></li>
+                        <li><code>git push origin main</code> <span>Envia alterações salvas para o GitHub</span></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3><i data-lucide="check-square"></i> Projetos para o Portfólio</h3>
+                    <div class="checklist" id="projects-checklist">
+                        <label class="check-item">
+                            <input type="checkbox" data-task="task-1">
+                            <span><strong>Calculadora / To-Do List:</strong> Treina manipulação de lógica e estado.</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="task-2">
+                            <span><strong>Site de Portfólio Pessoal:</strong> Apresenta seus projetos e contatos.</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="task-3">
+                            <span><strong>Consumo de API Externa:</strong> Ex: App de Clima ou Cotação de Moedas.</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="task-4">
+                            <span><strong>Sistema CRUD Completo:</strong> Cadastro, Leitura, Edição e Exclusão com Banco de Dados.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Seção: Roadmap Interativo de 90 Dias -->
+        <section id="roadmap" class="section">
+            <div class="section-header">
+                <h2><i data-lucide="map"></i> Roadmap de Estudos (90 Dias)</h2>
+                <p>Marque as etapas concluídas e acompanhe o crescimento da sua barra de progresso global.</p>
+            </div>
+
+            <div class="roadmap-grid">
+                <div class="roadmap-card">
+                    <div class="month-badge">Mês 1</div>
+                    <h3>Lógica & Fundamentos</h3>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-1">
+                            <span>Variáveis, Tipos de Dados e Operadores</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-2">
+                            <span>Estruturas Condicionais (if/else) e Loops (for/while)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-3">
+                            <span>Funções, Parâmetros e Modularização</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-4">
+                            <span>Instalação do VS Code, Git e Primeiro Commit no GitHub</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="roadmap-card">
+                    <div class="month-badge">Mês 2</div>
+                    <h3>Especialização & Estruturas</h3>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-5">
+                            <span>Estruturas de Dados Básicas (Arrays e Objetos)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-6">
+                            <span>Programação Orientada a Objetos ou Funcional</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-7">
+                            <span>Manipulação de Arquivos ou DOM Web</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-8">
+                            <span>Criação do Primeiro Projeto Prático Completo</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="roadmap-card">
+                    <div class="month-badge">Mês 3</div>
+                    <h3>Ecossistema & Mercado</h3>
+                    <div class="checklist">
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-9">
+                            <span>Framework Principal (React, Spring, FastAPI, etc.)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-10">
+                            <span>Bancos de Dados Relacionais e SQL Básico</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-11">
+                            <span>Deploy do Projeto na Nuvem (Vercel, Render, Railway)</span>
+                        </label>
+                        <label class="check-item">
+                            <input type="checkbox" data-task="rm-12">
+                            <span>Otimização do LinkedIn, GitHub e Envio de Currículos</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Seção: Dicionário do Desenvolvedor -->
+        <section id="glossary" class="section">
+            <div class="section-header">
+                <h2><i data-lucide="book-open"></i> Dicionário Tech (Termos sem Complicação)</h2>
+                <p>Consulte rapidamente os termos mais falados no dia a dia da programação.</p>
+            </div>
+
+            <div class="glossary-grid" id="glossary-grid">
+                <!-- Preenchido via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Detalhes da Linguagem -->
+    <div class="modal" id="lang-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal-btn">&times;</button>
+            <div id="modal-body">
+                <!-- Conteúdo Dinâmico -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Comparador Lado a Lado -->
+    <div class="modal" id="comparator-modal">
+        <div class="modal-content modal-large">
+            <button class="close-modal" id="close-comparator-btn">&times;</button>
+            <h2><i data-lucide="scale"></i> Comparativo de Linguagens</h2>
+            <div class="comparator-table-wrapper">
+                <table class="comparator-table" id="comparator-table">
+                    <!-- Tabela Dinâmica -->
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>DevManual.init • O guia definitivo para o inicio na programação • Feito para transformar curiosidade em carreira.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
